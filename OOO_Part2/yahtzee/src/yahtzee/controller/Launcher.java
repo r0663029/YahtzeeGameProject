@@ -36,8 +36,9 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
 	RegisterUI registerUI = new RegisterUI();
 	String name;
+	int counter = 0;
 	GameBoard board;
-	while(yahtzee.mayRegister()) {
+	while(yahtzee.mayRegister() && counter < 3) {
 	    do {
 		name = registerUI.showAndWait();
 	    } while(name == "" || yahtzee.playerAlreadyRegistered(name));
@@ -46,6 +47,7 @@ public class Launcher extends Application {
 	    board = new GameBoard();
 	    board.show();
 	    boards.put(name, board);
+	    counter++;
 	}
     }
 }

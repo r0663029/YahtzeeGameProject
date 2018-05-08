@@ -18,7 +18,6 @@ import javafx.scene.Scene;
 public class GameBoard extends Stage {
 
     private static final double spacing = 5;
-
     private String currentPlayerName;
 
     private Label footer;
