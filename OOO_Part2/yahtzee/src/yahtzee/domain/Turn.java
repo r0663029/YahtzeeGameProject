@@ -32,8 +32,8 @@ public class Turn {
         dicesAside.addAll(diceIndices);
     }
 
-    public List<Integer> getDices() {
-        return this.dicesThrown;
+    public List<Integer> getDicesAside() {
+        return this.dicesAside;
     }
 
     public boolean mayRoll() {

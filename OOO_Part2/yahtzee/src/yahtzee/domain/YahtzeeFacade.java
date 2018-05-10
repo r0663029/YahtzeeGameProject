@@ -1,11 +1,15 @@
 package yahtzee.domain;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * This class is a facade to the Yahtzee model.
  */
 public class YahtzeeFacade {
 
     private final PlayerGroup playerGroup;
+    private Turn turn;
 
     public YahtzeeFacade() {
 	playerGroup = new PlayerGroup();
@@ -49,5 +53,24 @@ public class YahtzeeFacade {
      */
     public boolean mayRegister() {
 	return true;
+    }
+    /**
+    generates random integers based on how many spots there are still available.
+    This is calculated by subtracting 5 minus the dices places aside.
+    */
+    public List<Integer> roll () {
+        return turn.roll();
+    }
+
+    /**
+     Set a list of dices aside chosen by the player
+     */
+
+    public void setAside(List<Integer> diceIndices) {
+        turn.setAside(diceIndices);
+    }
+
+    public boolean mayRoll() {
+        return turn.mayRoll();
     }
 }
