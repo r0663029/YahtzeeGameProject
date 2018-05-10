@@ -30,7 +30,7 @@ public class Controller {
 	while(yahtzee.mayRegister()) {
 	    do {
 		name = registerUI.showAndWait();
-	    } while(name == "" || yahtzee.playerAlreadyRegistered(name));
+	    } while(name.equals("") || yahtzee.playerAlreadyRegistered(name));
 	    yahtzee.registerPlayer(name);
 
 	    board = new GameBoard();
