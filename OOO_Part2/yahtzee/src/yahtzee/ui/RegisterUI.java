@@ -25,6 +25,6 @@ public class RegisterUI {
 	    return result.get();
 	}
 
-	return result.get();
+	return "";
     }
 }
