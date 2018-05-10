@@ -13,7 +13,7 @@ public class PlayerGroup {
 
     public PlayerGroup() {
 	players = new ArrayList<>();
-	currentPlayerIndex = 1;
+	currentPlayerIndex = 0;
     }
 
     /**
