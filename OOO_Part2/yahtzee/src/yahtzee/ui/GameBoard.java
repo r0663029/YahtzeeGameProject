@@ -9,6 +9,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
 import javafx.scene.Scene;
 
+import yahtzee.domain.YahtzeeFacade;
+
 /**
  * This class defines the main window the players interact with.
  *
@@ -19,46 +21,58 @@ public class GameBoard extends Stage {
 
     private static final double spacing = 5;
 
-    private String currentPlayerName;
+    private final YahtzeeFacade model;
 
     private Label footer;
 
-    public GameBoard() {
+    public GameBoard(YahtzeeFacade model) {
 	super();
 
+	this.model = model;
+	this.setScene(createScene());
+    }
+
+    private Scene createScene() {
 	VBox rootPane = new VBox(spacing);
 	rootPane.setAlignment(CENTER);
 
+	rootPane.getChildren().add(createHeaderPane());
+	rootPane.getChildren().add(createMainPane());
+	rootPane.getChildren().add(createFooterPane(model.getCurrentPlayerName()));
+
+	return new Scene(rootPane);
+    }
+
+    private Pane createHeaderPane() {
 	HBox headerPane = new HBox(spacing);
 	headerPane.setAlignment(CENTER);
-	rootPane.getChildren().add(headerPane);
 
+	headerPane.getChildren().add(new Label("Yahtzee"));
+
+	return headerPane;
+    }
+
+    private Pane createMainPane() {
 	Pane mainPane = new Pane();
 	mainPane.setPrefSize(500, 500);
-	rootPane.getChildren().add(mainPane);
 
+	return mainPane;
+    }
+
+    private Pane createFooterPane(String firstPlayer) {
 	HBox footerPane = new HBox(spacing);
 	footerPane.setAlignment(CENTER);
-	rootPane.getChildren().add(footerPane);
 
-	Label header = new Label("Yahtzee");
-	footer = new Label("The game will start after all players have registered.");
-
-
-	headerPane.getChildren().add(header);
+	footer = new Label(firstPlayer + " may start the game.");
 	footerPane.getChildren().add(footer);
 
-	Scene scene = new Scene(rootPane);
-	this.setScene(scene);
+	return footerPane;
     }
 
     /**
-     * Change who's turn it is.
-     *
-     * @param currentPlayerName The name to be displayed as current player.
+     * Update this GameBoard based the model given to the constructor.
      */
-    public void setCurrentPlayer(String currentPlayerName) {
-	this.currentPlayerName = currentPlayerName;
-	footer.setText(currentPlayerName + " is playing.");
+    public void update() {
+	footer.setText(model.getCurrentPlayerName() + " is playing.");
     }
 }

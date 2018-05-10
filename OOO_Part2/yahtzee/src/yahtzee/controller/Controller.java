@@ -33,7 +33,7 @@ public class Controller {
 	    } while(name.equals("") || yahtzee.playerAlreadyRegistered(name));
 	    yahtzee.registerPlayer(name);
 
-	    board = new GameBoard();
+	    board = new GameBoard(yahtzee);
 	    board.show();
 	    boards.put(name, board);
 	}
