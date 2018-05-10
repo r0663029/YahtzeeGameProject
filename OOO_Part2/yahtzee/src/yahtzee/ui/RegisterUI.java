@@ -21,10 +21,10 @@ public class RegisterUI {
 	dialog.setContentText("Please enter the player's name:");
 
 	Optional<String> result = dialog.showAndWait();
-	if (result.isPresent()){
-	    return result.get();
+        if (!result.isPresent()) {
+	    System.exit(-1);
 	}
 
-	return "";
+	return result.get();
     }
 }
