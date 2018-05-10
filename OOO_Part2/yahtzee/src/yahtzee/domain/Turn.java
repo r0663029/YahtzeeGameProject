@@ -27,7 +27,7 @@ public class Turn {
 
     public void setAside(List<Integer> diceIndices) throws DomainException {
         if (diceIndices.size() + dicesAside.size() > 5 ) {
-            throw new DomainException("Dices aside can't be larger than 5")
+            throw new DomainException("Dices aside can't be larger than 5");
         }
         dicesAside.addAll(diceIndices);
     }
