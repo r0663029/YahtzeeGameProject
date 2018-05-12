@@ -16,6 +16,7 @@ public class Controller {
 
     private YahtzeeFacade yahtzee;
     private Map<GameBoard, String> boards;
+    private GameBoard board;
 
     public Controller() {
 	yahtzee = new YahtzeeFacade();
@@ -42,13 +43,17 @@ public class Controller {
     }
 
     private void createBoard(String name) {
-	GameBoard board = new GameBoard(yahtzee);
+	board = new GameBoard(yahtzee);
 	board.addEventHandler(ROLL, this::handleRollRequest);
 	board.show();
 	boards.put(board, name);
     }
+	/**
+	 Added an update method to the handleRollRequest to refresh the main pane
+	 */
 
     private void handleRollRequest(Event event) {
 	((GameBoard)event.getTarget()).updateDice(yahtzee.roll());
+	board.updateView();
     }
 }

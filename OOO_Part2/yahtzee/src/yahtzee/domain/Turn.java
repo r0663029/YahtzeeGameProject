@@ -6,14 +6,14 @@ import java.util.List;
 public class Turn {
     private List<Integer> dicesAside = new ArrayList<Integer>(5);
     private List<Integer> dicesThrown;
-    private int counter = 0;
+    private int counterThrows = 0;
 
     public Turn() {
     }
 
     public List<Integer> roll() throws DomainException {
         if (mayRoll()) {
-            counter++;
+            counterThrows++;
             dicesThrown = new ArrayList<>();
             for (int i = 0; i < (5 - dicesAside.size()); i++) {
                 dicesThrown.add((int) (Math.random() * 6 + 1));
@@ -36,10 +36,33 @@ public class Turn {
         return this.dicesAside;
     }
 
+    public List<Integer> getDicesThrown() {
+        return this.dicesThrown;
+    }
+
     public boolean mayRoll() {
-        if (dicesAside.size()< 6 && counter < 3) {
-            return false;
+        if (dicesAside.size()< 6 && counterThrows < 3) {
+            return true;
         }
-        return true;
+        return false;
+    }
+
+    public int getCounterThrows() {
+        return counterThrows;
+    }
+
+    public void setCounterThrows(int counterThrows) {
+        this.counterThrows = counterThrows;
+    }
+
+    /**
+     Method used to transfer a chosen dice from the thrown dice list to the aside dice list
+     */
+
+    public void chooseDie(int diceId) {
+        if (dicesThrown.size() > 0) {
+            int dice = dicesThrown.remove(diceId);
+            dicesAside.add(dice);
+        }
     }
 }

@@ -33,6 +33,11 @@ public class YahtzeeFacade {
 	return playerGroup.getCurrentPlayer().getName();
     }
 
+
+    public Player getCurrentPlayer() {
+	return playerGroup.getCurrentPlayer();
+    }
+
     /**
      * Check wether the given name has already been registered.
      *
@@ -59,7 +64,7 @@ public class YahtzeeFacade {
     This is calculated by subtracting 5 minus the dices places aside.
     */
     public List<Integer> roll () {
-        return turn.roll();
+        return playerGroup.getCurrentPlayer().getTurn().roll();
     }
 
     /**
@@ -70,7 +75,35 @@ public class YahtzeeFacade {
         turn.setAside(diceIndices);
     }
 
+    /**
+     Method to get a list of all the dices which have been placed aside
+     */
+
+    public List<Integer> getDiceAside() {
+        return turn.getDicesAside();
+    }
+
+    /**
+     Method to get a list of all the dices thrown
+     */
+
+    public List<Integer> getDiceThrown() {
+        return turn.getDicesThrown();
+    }
+
+    /**
+     Method to check if a person is allowed to roll the dice
+     */
+
     public boolean mayRoll() {
-        return turn.mayRoll();
+        return playerGroup.getCurrentPlayer().getTurn().mayRoll();
+    }
+
+    /**
+     Method used to transfer a chosen dice from the thrown dice list to the aside dice list
+     */
+
+    public void chooseDice(int diceId) {
+        this.getCurrentPlayer().getTurn().chooseDie(diceId);
     }
 }

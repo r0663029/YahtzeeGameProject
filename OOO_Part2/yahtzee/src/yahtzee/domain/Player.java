@@ -5,12 +5,15 @@ package yahtzee.domain;
  */
 public class Player {
     private final String name;
+    private Turn turn;
 
     /**
      * Create a new player with the given name.
      */
     public Player(String name) {
-	this.name = name;
+
+        this.name = name;
+        this.turn = new Turn();
     }
 
     /**
@@ -20,5 +23,14 @@ public class Player {
      */
     public String getName() {
 	return name;
+    }
+
+
+    public Turn getTurn() {
+        return turn;
+    }
+
+    public void setTurn(Turn turn) {
+        this.turn = turn;
     }
 }
