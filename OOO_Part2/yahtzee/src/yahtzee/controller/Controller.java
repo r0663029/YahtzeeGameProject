@@ -31,12 +31,17 @@ public class Controller {
 	if ( ! name.equals("") && ! yahtzee.playerAlreadyRegistered(name)) {
 	    yahtzee.registerPlayer(name);
 
-	    board = new GameBoard(yahtzee);
-	    board.show();
-	    boards.put(name, board);
+	    createBoard(name);
 	}
+
 	if (yahtzee.mayRegister()) {
 	    (new RegisterUI(this::registerCallback)).show();
 	}
+    }
+
+    private void createBoard(String name) {
+	GameBoard board = new GameBoard(yahtzee);
+	board.show();
+	boards.put(board, name);
     }
 }
