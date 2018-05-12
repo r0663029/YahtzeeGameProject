@@ -2,14 +2,20 @@ package yahtzee.ui;
 
 import static javafx.geometry.Pos.CENTER;
 
+import java.util.List;
+
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.Scene;
 
 import yahtzee.domain.YahtzeeFacade;
+
+import yahtzee.ui.events.GameBoardEvent;
+import static yahtzee.ui.events.GameBoardEvent.ROLL;
 
 /**
  * This class defines the main window the players interact with.
@@ -23,6 +29,7 @@ public class GameBoard extends Stage {
 
     private final YahtzeeFacade model;
 
+    private Label diceLabel;
     private Label footer;
 
     public GameBoard(YahtzeeFacade model) {
@@ -30,6 +37,22 @@ public class GameBoard extends Stage {
 
 	this.model = model;
 	this.setScene(createScene());
+    }
+
+    /**
+     * Update the name displayed as current player.
+     */
+    public void updateCurrentPlayer() {
+	footer.setText(model.getCurrentPlayerName() + " is playing.");
+    }
+
+    /**
+     * Update the dice shown to the user.
+     *
+     * @param dice List of integers representing the values of the dice.
+     */
+    public void updateDice(List<Integer> dice) {
+	diceLabel.setText(formatDiceString(dice));
     }
 
     private Scene createScene() {
@@ -53,8 +76,15 @@ public class GameBoard extends Stage {
     }
 
     private Pane createMainPane() {
-	Pane mainPane = new Pane();
+	VBox mainPane = new VBox(spacing);
 	mainPane.setPrefSize(500, 500);
+
+	diceLabel = new Label("You haven't rolled any dice yet.");
+	mainPane.getChildren().add(diceLabel);
+
+	Button roll = new Button("roll remaining dice.");
+	roll.setOnAction(event -> this.fireEvent(new GameBoardEvent(event, this, ROLL)));
+	mainPane.getChildren().add(roll);
 
 	return mainPane;
     }
@@ -69,10 +99,13 @@ public class GameBoard extends Stage {
 	return footerPane;
     }
 
-    /**
-     * Update this GameBoard based the model given to the constructor.
-     */
-    public void update() {
-	footer.setText(model.getCurrentPlayerName() + " is playing.");
+    private String formatDiceString(List<Integer> dice) {
+	String str = " ";
+
+	for (Integer die : dice) {
+	    str += die + " ";
+	}
+
+	return str;
     }
 }
