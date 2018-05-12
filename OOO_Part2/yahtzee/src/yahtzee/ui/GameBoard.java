@@ -88,7 +88,6 @@ public class GameBoard extends Stage {
         diceLabel = new Label("You haven't rolled any dice yet.");
         mainPane.getChildren().add(diceLabel);
         Button roll = new Button("roll remaining dice.");
-
         roll.setOnAction(event -> this.fireEvent(new GameBoardEvent(event, this, ROLL)));
 
         mainPane.getChildren().add(roll);
@@ -149,10 +148,8 @@ public class GameBoard extends Stage {
         List<Integer> dice = new ArrayList<>();
         if (diceType.equals("chosenDice")) {
             dice = model.getCurrentPlayer().getTurn().getDicesAside();
-            System.out.println(dice);
         } else if (diceType.equals("thrownDice")) {
             dice = model.getCurrentPlayer().getTurn().getDicesThrown();
-            System.out.println(dice);
         }
 
         for (int i = 0; i < dice.size(); i++) {

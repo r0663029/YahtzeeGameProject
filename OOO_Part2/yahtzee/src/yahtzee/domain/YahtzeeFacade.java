@@ -106,4 +106,21 @@ public class YahtzeeFacade {
     public void chooseDice(int diceId) {
         this.getCurrentPlayer().getTurn().chooseDie(diceId);
     }
+
+    /**
+     * Change the isActive status of a player
+     */
+
+    public void setActive() {
+        getCurrentPlayer().setActive(true);
+    }
+
+    /**
+     * Get the current playergroup
+     */
+
+    public PlayerGroup getPlayerGroup() {
+        return playerGroup;
+    }
+
 }

@@ -48,7 +48,10 @@ public class PlayerGroup {
 		return true;
 	    }
 	}
-
 	return false;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
