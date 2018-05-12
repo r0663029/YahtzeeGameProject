@@ -13,7 +13,7 @@ import yahtzee.ui.GameBoard;
 public class Controller {
 
     private YahtzeeFacade yahtzee;
-    private Map<String, GameBoard> boards;
+    private Map<GameBoard, String> boards;
 
     public Controller() {
 	yahtzee = new YahtzeeFacade();
@@ -24,18 +24,19 @@ public class Controller {
      * Start the game
      */
     public void start() {
-	RegisterUI registerUI = new RegisterUI();
-	String name;
-	GameBoard board;
-	while(yahtzee.mayRegister()) {
-	    do {
-		name = registerUI.showAndWait();
-	    } while(name.equals("") || yahtzee.playerAlreadyRegistered(name));
+	(new RegisterUI(this::registerCallback)).show();
+    }
+
+    private void registerCallback(String name) {
+	if ( ! name.equals("") && ! yahtzee.playerAlreadyRegistered(name)) {
 	    yahtzee.registerPlayer(name);
 
 	    board = new GameBoard(yahtzee);
 	    board.show();
 	    boards.put(name, board);
+	}
+	if (yahtzee.mayRegister()) {
+	    (new RegisterUI(this::registerCallback)).show();
 	}
     }
 }
