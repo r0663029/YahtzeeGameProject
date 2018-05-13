@@ -7,6 +7,7 @@ public class Player {
     private final String name;
     private Turn turn;
     private boolean isActive;
+    private Scoreboard scoreboard;
 
     /**
      * Create a new player with the given name.
@@ -15,7 +16,8 @@ public class Player {
 
         this.name = name;
         this.turn = new Turn();
-        isActive = false;
+        this.isActive = false;
+        this.scoreboard = new Scoreboard();
     }
 
     /**
@@ -55,7 +57,18 @@ public class Player {
      * Change the isActive boolean
      */
 
-    public void setActive(boolean mayRoll) {
-        this.isActive = mayRoll;
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
+
+    /**
+     * Get the scoreboard for a specific player
+     */
+
+    public Scoreboard getScoreboard(){ return this.scoreboard;}
+
+    @Override
+    public String toString() { return getName();}
 }
+
+
