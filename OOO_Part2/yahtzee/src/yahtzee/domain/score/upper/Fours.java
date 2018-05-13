@@ -4,11 +4,11 @@ import yahtzee.domain.DomainException;
 import yahtzee.domain.score.ScoreCategory;
 
 public class Fours implements ScoreCategory  {
-	private static final String categoryname = "Fours";
+	private static final String categoryName = "Fours";
 	private int score = -1;
 
 	@Override
-	public void inputdice(int[] dice) {
+	public void inputDice(int[] dice) {
 		if (dice == null) {
 			throw new DomainException("The array 'dice' was null.");
 		}
@@ -57,6 +57,6 @@ public class Fours implements ScoreCategory  {
 	
 	@Override
 	public String getNameOfCategory() {
-		return this.categoryname;
+		return this.categoryName;
 	}
 }

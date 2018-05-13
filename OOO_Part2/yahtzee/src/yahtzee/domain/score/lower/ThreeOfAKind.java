@@ -4,11 +4,11 @@ import yahtzee.domain.DomainException;
 import yahtzee.domain.score.ScoreCategory;
 
 public class ThreeOfAKind implements ScoreCategory  {
-	private static final String categoryname = "Three Of a Kind";
+	private static final String categoryName = "Three Of A Kind";
 	private int score = -1;
 
 	@Override
-	public void inputdice(int[] dice) {
+	public void inputDice(int[] dice) {
 		if (dice == null) {
 			throw new DomainException("The array 'dice' was null.");
 		}
@@ -17,10 +17,10 @@ public class ThreeOfAKind implements ScoreCategory  {
 			throw new DomainException("The array 'dice' is not 5 long.");
 		}
 		if (isValidThreeOfAKind(dice)) {
-		      setScore(30);
-		    } else {
-		      setScore(0);
-		    }
+			setScore(calculateScore(dice));
+		} else {
+			setScore(0);
+		}
 	}
 	
 	public boolean isValidThreeOfAKind(int[] dice) {
@@ -73,7 +73,7 @@ public class ThreeOfAKind implements ScoreCategory  {
 	
 	@Override
 	public String getNameOfCategory() {
-		return this.categoryname;
+		return this.categoryName;
 	}
 
 
