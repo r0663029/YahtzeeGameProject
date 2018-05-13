@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class YahtzeeFacade {
 
     private final PlayerGroup playerGroup;
+    private boolean gameStarted = false;
 
     public YahtzeeFacade() {
 	playerGroup = new PlayerGroup();
@@ -58,20 +59,27 @@ public class YahtzeeFacade {
      *         False otherwise.
      */
     public boolean mayRegister() {
-	return true;
+		if (!getGameStarted()) {
+			return true;
+		}
+		else {
+			return false;
+		}
     }
+
     /**
     @return List of random integers based on how many spots there are still available.
     This is calculated by subtracting 5 minus the dices places aside.
     */
     public List<Integer> roll () {
+    	setGameStarted(true);
         return playerGroup.getCurrentPlayer().getTurn().roll();
     }
 
 	/**
 	 @return Turn object for the current active player
 	 */
-    public Turn getTurnOfCurrentPlayer() {return getCurrentPlayer().getTurn();}
+    public Turn getTurnOfCurrentPlayer() {return playerGroup.getCurrentPlayer().getTurn();}
 
     /**
 	 @param dieIndex representing the index in de list of thrown dice.
@@ -188,7 +196,7 @@ public class YahtzeeFacade {
 		for (int i = 0; i < diceAside.size(); i++) {
 			array[i] = diceAside.get(i);
 		}
-		category.inputdice(array);
+		category.inputDice(array);
 	}
 
 	/**
@@ -201,5 +209,13 @@ public class YahtzeeFacade {
 
 	public void switchToNextPlayer() {
 		getPlayerGroup().switchToNextPlayer();
+	}
+
+	public boolean getGameStarted() {
+		return gameStarted;
+	}
+
+	public void setGameStarted(boolean gameStarted) {
+		this.gameStarted = gameStarted;
 	}
 }
