@@ -8,50 +8,63 @@ import java.util.ArrayList;
  * the same match, and who's turn it is.
  */
 public class PlayerGroup {
-    private final List<Player> players;
-    private int currentPlayerIndex;
+	private final List<Player> players;
+	private int currentPlayerIndex;
 
-    public PlayerGroup() {
-	players = new ArrayList<>();
-	currentPlayerIndex = 0;
-    }
-
-    /**
-     * Add the given player to this PlayerGroup.
-     *
-     * @param player The player to be added.
-     */
-    public void addPlayer(Player player) {
-	players.add(player);
-    }
-
-    /**
-     * Return the player who's turn it is.
-     *
-     * @return The player who may make a move.
-     */
-    public Player getCurrentPlayer() {
-	return players.get(currentPlayerIndex);
-    }
-
-    /**
-     * Check if this PlayerGroup contains a player with the given name.
-     *
-     * @param name The name of the player to look for.
-     *
-     * @return True if this PlayerGroup contains a player with the given name.
-     *         False otherwise.
-     */
-    public boolean contains(String name) {
-	for (Player player : players) {
-	    if (player.getName().equals(name)) {
-		return true;
-	    }
+	public PlayerGroup() {
+		players = new ArrayList<>();
+		currentPlayerIndex = 0;
 	}
-	return false;
-    }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
+	/**
+	 * Add the given player to this PlayerGroup.
+	 *
+	 * @param player The player to be added.
+	 */
+	public void addPlayer(Player player) {
+		if (players.size() == 0) {
+			player.setActive(true);
+		}
+		players.add(player);
+	}
+
+	/**
+	 * Return the player who's turn it is.
+	 *
+	 * @return The player who may make a move.
+	 */
+	public Player getCurrentPlayer() {
+		return players.get(currentPlayerIndex);
+	}
+
+	public void switchToNextPlayer() {
+		getCurrentPlayer().setActive(false);
+		if (currentPlayerIndex < getPlayers().size() - 1) {
+			currentPlayerIndex++;
+		} else {
+			currentPlayerIndex = 0;
+		}
+		getPlayers().get(currentPlayerIndex).setActive(true);
+		getPlayers().get(currentPlayerIndex).setTurn(new Turn());
+	}
+
+	/**
+	 * Check if this PlayerGroup contains a player with the given name.
+	 *
+	 * @param name The name of the player to look for.
+	 * @return True if this PlayerGroup contains a player with the given name.
+	 * False otherwise.
+	 */
+	public boolean contains(String name) {
+		for (Player player : players) {
+			if (player.getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
 }
