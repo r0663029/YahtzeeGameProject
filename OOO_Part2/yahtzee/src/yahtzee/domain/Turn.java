@@ -6,9 +6,10 @@ import java.util.List;
 public class Turn {
     private List<Integer> dicesAside = new ArrayList<Integer>(5);
     private List<Integer> dicesThrown;
-    private int counterThrows = 0;
+    private int counterThrows;
 
     public Turn() {
+    	counterThrows = 0;
     }
 
     public List<Integer> roll() throws DomainException {
@@ -25,11 +26,14 @@ public class Turn {
         return dicesThrown;
     }
 
-    public void setAside(List<Integer> diceIndices) throws DomainException {
-        if (diceIndices.size() + dicesAside.size() > 5 ) {
+    public void setAside(int dieIndex) throws DomainException {
+        if (dicesAside.size() > 5 ) {
             throw new DomainException("Dices aside can't be larger than 5");
         }
-        dicesAside.addAll(diceIndices);
+        int die = dicesThrown.get(dieIndex);
+        dicesThrown.remove(dieIndex);
+        dicesAside.add(die);
+
     }
 
     public List<Integer> getDicesAside() {
@@ -53,16 +57,5 @@ public class Turn {
 
     public void setCounterThrows(int counterThrows) {
         this.counterThrows = counterThrows;
-    }
-
-    /**
-     Method used to transfer a chosen dice from the thrown dice list to the aside dice list
-     */
-
-    public void chooseDie(int diceId) {
-        if (dicesThrown.size() > 0) {
-            int dice = dicesThrown.remove(diceId);
-            dicesAside.add(dice);
-        }
     }
 }
