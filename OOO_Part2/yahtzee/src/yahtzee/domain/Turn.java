@@ -26,14 +26,12 @@ public class Turn {
         return dicesThrown;
     }
 
-    public void setAside(int dieIndex) throws DomainException {
+    public void setAside(int dieValue) throws DomainException {
         if (dicesAside.size() > 5 ) {
             throw new DomainException("Dices aside can't be larger than 5");
         }
-        int die = dicesThrown.get(dieIndex);
-        dicesThrown.remove(dieIndex);
+        int die = dicesThrown.remove(dicesThrown.indexOf(dieValue));
         dicesAside.add(die);
-
     }
 
     public List<Integer> getDicesAside() {
