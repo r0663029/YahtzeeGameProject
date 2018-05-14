@@ -38,6 +38,7 @@ public class GameBoard extends Stage {
     private Label noDiceRolledMessage;
     private ObservableList<Node> diceThrown;
     private ObservableList<Node> diceAside;
+    private Button roll;
     private Label footer;
 
     public GameBoard(YahtzeeFacade model) {
@@ -48,29 +49,45 @@ public class GameBoard extends Stage {
     }
 
     /**
+     * Update this board based on the current state of the model.
+     */
+    public void update() {
+	updateCurrentPlayer();
+	updateDice();
+	updateMayRoll();
+    }
+
+    /**
      * Update the name displayed as current player.
      */
-    public void updateCurrentPlayer() {
+    private void updateCurrentPlayer() {
 	footer.setText(model.getCurrentPlayerName() + " is playing.");
     }
 
     /**
      * Update the dice shown to the user.
-     *
-     * @param diceThrown Collection of integers representing the values of the
-     * dice most recently thrown.
-     * @param diceAside Collection of integers representing the values of the
-     * dice set aside so far.
      */
-    public void updateDice(Collection<Integer> diceThrown, Collection<Integer> diceAside) {
-	this.diceThrown.clear();
-	this.diceAside.clear();
+    private void updateDice() {
+	diceThrown.clear();
+	diceAside.clear();
 
-	for (int die : diceThrown) {
-	    this.diceThrown.add(createDice(die, true));
+	for (int die : model.getDiceThrown()) {
+	    diceThrown.add(createDice(die, true));
 	}
-	for (int die : diceAside) {
+	for (int die : model.getDiceAside()) {
 	    this.diceAside.add(createDice(die, false));
+	}
+    }
+
+    /**
+     * Update wether the player may roll any dice.
+     */
+    private void updateMayRoll() {
+	if (model.mayRoll()) {
+	    roll.setDisable(false);
+	} else {
+	    roll.setDisable(true);
+	    dicePanel.setDisable(true);
 	}
     }
 
@@ -112,7 +129,7 @@ public class GameBoard extends Stage {
 
 	mainPane.getChildren().add(createDiceDisplay());
 
-	Button roll = new Button("roll remaining dice.");
+	roll = new Button("roll remaining dice.");
 	roll.setOnAction(this::rollHandler);
 	mainPane.getChildren().add(roll);
 
