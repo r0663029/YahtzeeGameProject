@@ -162,14 +162,4 @@ public class GameBoard extends Stage {
 
 	return footerPane;
     }
-
-    private String formatDiceString(List<Integer> dice) {
-	String str = " ";
-
-	for (Integer die : dice) {
-	    str += die + " ";
-	}
-
-	return str;
-    }
 }
