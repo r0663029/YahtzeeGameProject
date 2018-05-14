@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import yahtzee.domain.YahtzeeFacade;
 
 import yahtzee.ui.events.GameBoardEvent;
+import yahtzee.ui.events.SetAsideDieEvent;
 import static yahtzee.ui.events.GameBoardEvent.ROLL;
 
 /**
@@ -151,6 +152,9 @@ public class GameBoard extends Stage {
     }
 
     private void setAsideDieHandler(Event event) {
+	DieButton targetDieButton = (DieButton) event.getTarget();
+	int numberOfEyes = targetDieButton.getNumberOfEyes();
+	this.fireEvent(new SetAsideDieEvent(event, this, numberOfEyes));
     }
 
     private Pane createFooterPane(String firstPlayer) {

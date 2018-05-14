@@ -7,7 +7,9 @@ import javafx.event.Event;
 import yahtzee.domain.YahtzeeFacade;
 import yahtzee.ui.RegisterUI;
 import yahtzee.ui.GameBoard;
+import yahtzee.ui.events.SetAsideDieEvent;
 import static yahtzee.ui.events.GameBoardEvent.ROLL;
+import static yahtzee.ui.events.GameBoardEvent.SET_ASIDE_DIE;
 
 /**
  * Controller of the Yahtzee game
@@ -44,11 +46,18 @@ public class Controller {
     private void createBoard(String name) {
 	GameBoard board = new GameBoard(yahtzee);
 	board.addEventHandler(ROLL, this::handleRollRequest);
+	board.addEventHandler(SET_ASIDE_DIE, this::handleSetAsideDieRequest);
 	board.show();
 	boards.put(board, name);
     }
 
     private void handleRollRequest(Event event) {
-	((GameBoard)event.getTarget()).updateDice(yahtzee.roll(), yahtzee.getDiceAside());
+	yahtzee.roll();
+	((GameBoard)event.getTarget()).updateDice(yahtzee.getDiceThrown(), yahtzee.getDiceAside());
+    }
+
+    private void handleSetAsideDieRequest(Event event) {
+	yahtzee.setAside(((SetAsideDieEvent)event).getPayload());
+	((GameBoard)event.getTarget()).updateDice(yahtzee.getDiceThrown(), yahtzee.getDiceAside());
     }
 }
