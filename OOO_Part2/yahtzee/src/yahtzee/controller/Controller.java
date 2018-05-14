@@ -49,6 +49,6 @@ public class Controller {
     }
 
     private void handleRollRequest(Event event) {
-	((GameBoard)event.getTarget()).updateDice(yahtzee.roll());
+	((GameBoard)event.getTarget()).updateDice(yahtzee.roll(), yahtzee.getDiceAside());
     }
 }
