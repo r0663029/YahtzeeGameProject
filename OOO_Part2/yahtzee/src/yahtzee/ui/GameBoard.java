@@ -5,6 +5,7 @@ import static javafx.geometry.Pos.CENTER;
 import java.util.List;
 import java.util.Collection;
 
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.stage.Stage;
@@ -15,11 +16,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 
 import yahtzee.domain.YahtzeeFacade;
 
 import yahtzee.ui.events.GameBoardEvent;
 import yahtzee.ui.events.SetAsideDieEvent;
+import yahtzee.ui.events.ChooseCategoryEvent;
 import static yahtzee.ui.events.GameBoardEvent.ROLL;
 
 /**
@@ -39,6 +42,7 @@ public class GameBoard extends Stage {
     private ObservableList<Node> diceThrown;
     private ObservableList<Node> diceAside;
     private Button roll;
+    private ComboBox<String> categoriesComboBox;
     private Label footer;
 
     public GameBoard(YahtzeeFacade model) {
@@ -133,6 +137,10 @@ public class GameBoard extends Stage {
 	roll.setOnAction(this::rollHandler);
 	mainPane.getChildren().add(roll);
 
+	categoriesComboBox =
+	    new ComboBox<>(observableArrayList(model.getCategoryListStrings()));
+	categoriesComboBox.getSelectionModel().selectFirst();
+	mainPane.getChildren().add(categoriesComboBox);
 	return mainPane;
     }
 

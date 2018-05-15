@@ -9,7 +9,8 @@ public class GameBoardEvent extends Event {
 
     public static final EventType<GameBoardEvent> YAHTZEE = new EventType<>("Yahtzee");
     public static final EventType<GameBoardEvent> ROLL = new EventType<>(YAHTZEE, "Roll");
-    public static final EventType<GameBoardEvent> SET_ASIDE_DIE = new EventType<>(YAHTZEE, "Set aside a die");
+    public static final EventType<GameBoardEvent> SET_ASIDE_DIE = new EventType<>(YAHTZEE, "Set aside die");
+    public static final EventType<GameBoardEvent> CHOOSE_CATEGORY = new EventType<>(YAHTZEE, "Choose category");
 
     public GameBoardEvent(Event source, GameBoard target, EventType<GameBoardEvent> type) {
 	super(source, target, type);

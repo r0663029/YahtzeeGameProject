@@ -10,9 +10,11 @@ import yahtzee.domain.YahtzeeFacade;
 import yahtzee.ui.RegisterUI;
 import yahtzee.ui.GameBoard;
 import yahtzee.ui.events.SetAsideDieEvent;
+import yahtzee.ui.events.ChooseCategoryEvent;
 import static yahtzee.ui.events.GameBoardEvent.YAHTZEE;
 import static yahtzee.ui.events.GameBoardEvent.ROLL;
 import static yahtzee.ui.events.GameBoardEvent.SET_ASIDE_DIE;
+import static yahtzee.ui.events.GameBoardEvent.CHOOSE_CATEGORY;
 
 /**
  * Controller of the Yahtzee game
@@ -61,6 +63,7 @@ public class Controller {
 	board.addEventHandler(YAHTZEE, this::handleUpdates);
 	board.addEventHandler(ROLL, this::handleRollRequest);
 	board.addEventHandler(SET_ASIDE_DIE, this::handleSetAsideDieRequest);
+	board.addEventHandler(CHOOSE_CATEGORY, this::handleChooseCategory);
 	board.show();
 	boards.put(board, name);
     }
@@ -75,5 +78,9 @@ public class Controller {
 
     private void handleSetAsideDieRequest(Event event) {
 	yahtzee.setAside(((SetAsideDieEvent)event).getPayload());
+    }
+
+    private void handleChooseCategory(Event event) {
+	yahtzee.setScore(((ChooseCategoryEvent)event).getCategory());
     }
 }
