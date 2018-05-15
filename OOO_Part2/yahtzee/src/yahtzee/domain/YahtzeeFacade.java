@@ -199,12 +199,7 @@ public class YahtzeeFacade {
 	 * @param categoryName of the category needed to define the score of the dice. example: Three Of A Kind
 	 */
 	public void setScore( String categoryName) {
-		ScoreCategory category = getCategory(categoryName);
-		int[] array = new int[5];
-		for (int i = 0; i < getDiceAside().size(); i++) {
-			array[i] = getDiceAside().get(i);
-		}
-		category.inputDice(array);
+		getScoreboard().setScore(categoryName, getDiceAside());
 	}
 
 	/**
@@ -222,7 +217,7 @@ public class YahtzeeFacade {
 		}
 		return categoryMap;
 	}
-
+	
 	public void switchToNextPlayer() {
 		getPlayerGroup().switchToNextPlayer();
 	}
@@ -234,11 +229,4 @@ public class YahtzeeFacade {
 	public void setGameStarted(boolean gameStarted) {
 		this.gameStarted = gameStarted;
 	}
-
-	public static void main(String[] args) {
-		YahtzeeFacade facade = new YahtzeeFacade();
-		facade.registerPlayer("Kristof");
-		System.out.println(facade.getCategoriesAsMap());
-	}
-	
 }
