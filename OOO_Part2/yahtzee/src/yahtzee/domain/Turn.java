@@ -47,7 +47,7 @@ public class Turn {
     }
 
     public boolean mayRoll() {
-        if (dicesAside.size()< 6 && counterThrows < 3) {
+        if (dicesAside.size() < 5 && counterThrows < 3) {
             return true;
         }
         return false;
