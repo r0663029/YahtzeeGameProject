@@ -2,8 +2,7 @@ package yahtzee.domain;
 
 import yahtzee.domain.score.ScoreCategory;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * This class is a facade to the Yahtzee model.
@@ -18,7 +17,7 @@ public class YahtzeeFacade {
 	}
 
 	/**
-	 * Register the given player in an upcomming match.
+	 * Register the given player in an upcoming match.
 	 *
 	 * @param name The name of the player to register.
 	 */
@@ -197,7 +196,7 @@ public class YahtzeeFacade {
 	/**
 	 * Set the score of a specific category based on the dice aside.
 	 *
-	 * @param categoryName of the category needed to define the score of the dice. example: Three Of a Kind
+	 * @param categoryName of the category needed to define the score of the dice. example: Three Of A Kind
 	 */
 	public void setScore( String categoryName) {
 		ScoreCategory category = getCategory(categoryName);
@@ -215,6 +214,14 @@ public class YahtzeeFacade {
 	 * resets the index to 0.
 	 * Creates a new Turn object for the new active player
 	 */
+	
+	public Map<String, Integer> getCategoriesAsMap() {
+		Map<String, Integer> categoryMap = new LinkedHashMap<>();
+		for (int i = 0; i < getCategoryList().size(); i++) {
+			categoryMap.put(getCategoryListStrings().get(i), getCategoryList().get(i).getScore());
+		}
+		return categoryMap;
+	}
 
 	public void switchToNextPlayer() {
 		getPlayerGroup().switchToNextPlayer();
@@ -227,4 +234,11 @@ public class YahtzeeFacade {
 	public void setGameStarted(boolean gameStarted) {
 		this.gameStarted = gameStarted;
 	}
+
+	public static void main(String[] args) {
+		YahtzeeFacade facade = new YahtzeeFacade();
+		facade.registerPlayer("Kristof");
+		System.out.println(facade.getCategoriesAsMap());
+	}
+	
 }
