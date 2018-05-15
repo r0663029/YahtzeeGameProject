@@ -4,21 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Turn {
-    private List<Integer> dicesAside = new ArrayList<Integer>(5);
-    private List<Integer> dicesThrown;
+    private List<Integer> dicesAside;
+	private List<Integer> dicesThrown;
     private int counterThrows;
 
     public Turn() {
     	counterThrows = 0;
+		dicesThrown = new ArrayList<>(5);
+		dicesAside = new ArrayList<Integer>(5);
     }
 
     public List<Integer> roll() throws DomainException {
         if (mayRoll()) {
             counterThrows++;
             dicesThrown = new ArrayList<>();
-            for (int i = 0; i < (5 - dicesAside.size()); i++) {
-                dicesThrown.add((int) (Math.random() * 6 + 1));
-            }
+			Throw lastThrow = new Throw(5 - getDicesAside().size());
+			dicesThrown = lastThrow.getValues();
             if (counterThrows == 3) {
             	dicesAside.addAll(dicesThrown);
             	dicesThrown.clear();
