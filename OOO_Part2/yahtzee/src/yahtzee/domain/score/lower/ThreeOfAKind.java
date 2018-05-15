@@ -3,16 +3,18 @@ package yahtzee.domain.score.lower;
 import yahtzee.domain.DomainException;
 import yahtzee.domain.score.ScoreCategory;
 
+import java.util.List;
+
 public class ThreeOfAKind implements ScoreCategory  {
 	private static final String categoryName = "Three Of A Kind";
 	private int score = -1;
 
 	@Override
-	public void inputDice(int[] dice) {
+	public void inputDice(List<Integer> dice) {
 		if (dice == null) {
 			throw new DomainException("The array 'dice' was null.");
 		}
-		int diceLength = dice.length;
+		int diceLength = dice.size();
 		if (diceLength != 5) {
 			throw new DomainException("The array 'dice' is not 5 long.");
 		}
@@ -23,10 +25,10 @@ public class ThreeOfAKind implements ScoreCategory  {
 		}
 	}
 	
-	public boolean isValidThreeOfAKind(int[] dice) {
-		int[] valueCounts = new int[5];
-	    for (int i = 0; i < dice.length; i++) {
-	    		int value = dice[i];
+	public boolean isValidThreeOfAKind(List<Integer> dice) {
+		int[] valueCounts = new int[6];
+	    for (int i = 0; i < dice.size(); i++) {
+	    		int value = dice.get(i);
 	    		valueCounts[(value - 1)] += 1;
 	    }
 	    for (int i = 0; i < valueCounts.length; i++) {
@@ -37,10 +39,10 @@ public class ThreeOfAKind implements ScoreCategory  {
 	    return false;
 	}
 	  
-	public int calculateScore(int[] dice) {
+	public int calculateScore(List<Integer> dice) {
 		int result = 0;
-		for (int i = 0; i < dice.length; i++) {
-			  int score = dice[i];
+		for (int i = 0; i < dice.size(); i++) {
+			  int score = dice.get(i);
 			  result += score;
 		}
 		return result;

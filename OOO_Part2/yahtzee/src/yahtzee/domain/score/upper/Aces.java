@@ -3,16 +3,18 @@ package yahtzee.domain.score.upper;
 import yahtzee.domain.DomainException;
 import yahtzee.domain.score.ScoreCategory;
 
+import java.util.List;
+
 public class Aces implements ScoreCategory {
 	private static final String categoryName = "Aces";
 	private int score = -1;
 
 	@Override
-	public void inputDice(int[] dice) {
+	public void inputDice(List<Integer> dice) {
 		if (dice == null) {
 			throw new DomainException("The array 'dice' was null.");
 		}
-		int diceLength = dice.length;
+		int diceLength = dice.size();
 		if (diceLength != 5) {
 			throw new DomainException("The array 'dice' is not 5 long.");
 		}
@@ -20,10 +22,10 @@ public class Aces implements ScoreCategory {
 
 	}
 	
-	public int calculateScore(int[] dice) {
+	public int calculateScore(List<Integer> dice) {
 		int result = 0;
-		for (int i = 0; i < dice.length; i++) {
-			int value = dice[i];
+		for (int i = 0; i < dice.size(); i++) {
+			int value = dice.get(i);
 			if (value == 1) {
 				result++;
 			}
