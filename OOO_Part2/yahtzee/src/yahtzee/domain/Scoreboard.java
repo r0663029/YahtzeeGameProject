@@ -29,6 +29,7 @@ public class Scoreboard {
 	public List<ScoreCategory> getCategoryList () {
 		return this.categoryList;
 	}
+	
 	public List<String> getCategoryListAsString () {
 		List<String> categoryStrings = new ArrayList<String>();
 		for (ScoreCategory category: categoryList )  {
@@ -45,6 +46,13 @@ public class Scoreboard {
 		}
 		return null;
 	}
+	
+	public void setScore(String categoryName, List<Integer> dice) {
+		ScoreCategory category = getCategory(categoryName);
+		category.inputDice(dice);
+	}
+	
+	
 
 
 }
