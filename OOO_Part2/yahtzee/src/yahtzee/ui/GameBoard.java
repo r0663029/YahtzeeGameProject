@@ -43,6 +43,7 @@ public class GameBoard extends Stage {
     private ObservableList<Node> diceAside;
     private Button roll;
     private ComboBox<String> categoriesComboBox;
+    private Button confirmCategoryButton;
     private Label footer;
 
     public GameBoard(YahtzeeFacade model) {
@@ -141,6 +142,12 @@ public class GameBoard extends Stage {
 	    new ComboBox<>(observableArrayList(model.getCategoryListStrings()));
 	categoriesComboBox.getSelectionModel().selectFirst();
 	mainPane.getChildren().add(categoriesComboBox);
+
+	confirmCategoryButton = new Button("Confirm category");
+	confirmCategoryButton.setOnAction(this::chooseCategoryHandler);
+	confirmCategoryButton.setDisable(true);
+	mainPane.getChildren().add(confirmCategoryButton);
+
 	return mainPane;
     }
 
@@ -149,6 +156,11 @@ public class GameBoard extends Stage {
 	dicePanel.setVisible(true);
 
 	this.fireEvent(new GameBoardEvent(event, this, ROLL));
+    }
+
+    private void chooseCategoryHandler(Event event) {
+	String selection = (String) categoriesComboBox.getValue();
+	this.fireEvent(new ChooseCategoryEvent(event, this, selection));
     }
 
     private Pane createDiceDisplay() {
