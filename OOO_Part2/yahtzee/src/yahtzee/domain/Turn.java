@@ -19,6 +19,10 @@ public class Turn {
             for (int i = 0; i < (5 - dicesAside.size()); i++) {
                 dicesThrown.add((int) (Math.random() * 6 + 1));
             }
+            if (counterThrows == 3) {
+            	dicesAside.addAll(dicesThrown);
+            	dicesThrown.clear();
+			}
         }
         else {
             throw new DomainException("Player is not allowed to roll anymore");
