@@ -197,14 +197,13 @@ public class YahtzeeFacade {
 	/**
 	 * Set the score of a specific category based on the dice aside.
 	 *
-	 * @param diceAside    List of the dice which have been placed aside by the user.
 	 * @param categoryName of the category needed to define the score of the dice. example: Three Of a Kind
 	 */
-	public void setScore(List<Integer> diceAside, String categoryName) {
+	public void setScore( String categoryName) {
 		ScoreCategory category = getCategory(categoryName);
 		int[] array = new int[5];
-		for (int i = 0; i < diceAside.size(); i++) {
-			array[i] = diceAside.get(i);
+		for (int i = 0; i < getDiceAside().size(); i++) {
+			array[i] = getDiceAside().get(i);
 		}
 		category.inputDice(array);
 	}
