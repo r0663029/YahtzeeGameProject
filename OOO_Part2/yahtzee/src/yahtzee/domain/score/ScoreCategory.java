@@ -1,7 +1,9 @@
 package yahtzee.domain.score;
 
+import java.util.List;
+
 public interface ScoreCategory {
-	public abstract void inputDice(int[] dice);
+	public abstract void inputDice(List<Integer> dice);
 	
 	public abstract void setScore(int score);
 	
