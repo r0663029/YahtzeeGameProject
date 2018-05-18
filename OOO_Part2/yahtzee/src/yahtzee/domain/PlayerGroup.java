@@ -45,7 +45,6 @@ public class PlayerGroup {
 			currentPlayerIndex = 0;
 		}
 		getPlayers().get(currentPlayerIndex).setActive(true);
-		getPlayers().get(currentPlayerIndex).setTurn(new Turn());
 	}
 
 	/**
