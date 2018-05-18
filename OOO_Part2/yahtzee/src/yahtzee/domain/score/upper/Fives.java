@@ -48,8 +48,7 @@ public class Fives implements ScoreCategory {
 		return true;
 	}
 
-	@Override
-	public void setScore(int score) {
+	private void setScore(int score) {
 		if (score >= 0) {
 		    this.score = score;
 		} else {
