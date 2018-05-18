@@ -1,6 +1,7 @@
 package yahtzee.domain;
 
 import yahtzee.domain.score.ScoreCategory;
+import yahtzee.domain.states.*;
 
 import java.util.*;
 
@@ -10,10 +11,21 @@ import java.util.*;
 public class YahtzeeFacade {
 
 	private final PlayerGroup playerGroup;
-	private boolean gameStarted = false;
+	private Turn turn;
+	State registeringState;
+	State gameNotStartedState;
+	State currentState;
+	State playingState;
+	State gameEndedState;
 
 	public YahtzeeFacade() {
 		playerGroup = new PlayerGroup();
+		turn = new Turn();
+		gameNotStartedState = new GameNotStartedState(this);
+		registeringState = new RegisteringState(this);
+		playingState =  new PlayingState(this);
+		gameEndedState = new GameEndedState(this);
+		currentState = gameNotStartedState;
 	}
 
 	/**
@@ -22,19 +34,24 @@ public class YahtzeeFacade {
 	 * @param name The name of the player to register.
 	 */
 	public void registerPlayer(String name) {
-		playerGroup.addPlayer(new Player(name));
+		getCurrentState().registerPlayer(name);
 	}
 
 	/**
-	 * Return the name of the player who's turn it is.
+	 * Return the name of the current player.
 	 *
-	 * @return The name of the player who may make a move.
+	 * @return The name of the current player.
 	 */
 	public String getCurrentPlayerName() {
 		return playerGroup.getCurrentPlayer().getName();
 	}
 
-
+	/**
+	 * Return the current player.
+	 *
+	 * @return the current player.
+	 */
+	
 	public Player getCurrentPlayer() {
 		return playerGroup.getCurrentPlayer();
 	}
@@ -51,69 +68,57 @@ public class YahtzeeFacade {
 	}
 
 	/**
-	 * Check wether more players may be registered.
-	 *
-	 * @return True if more players may be registered for this match.
-	 * False otherwise.
+	 * @return List of Integers. 
+	 * Returns the correct roll method based on the state of the game
 	 */
-	public boolean mayRegister() {
-		if (!getGameStarted()) {
-			return true;
-		} else {
-			return false;
-		}
+	public void roll() {
+		getCurrentState().roll();
 	}
 
 	/**
-	 * @return List of random integers based on how many spots there are still available.
-	 * This is calculated by subtracting 5 minus the dices places aside.
-	 */
-	public List<Integer> roll() {
-		setGameStarted(true);
-		return playerGroup.getCurrentPlayer().getTurn().roll();
-	}
-
-	/**
-	 * @return Turn object for the current active player
-	 */
-	public Turn getTurnOfCurrentPlayer() {
-		return playerGroup.getCurrentPlayer().getTurn();
-	}
-
-	/**
-	 * @param dieValue representing the index in de list of thrown dice.
+	 * @param dieValue representing the eyes of a single die.
 	 */
 
 	public void setAside(int dieValue) {
-		getTurnOfCurrentPlayer().setAside(dieValue);
+		getCurrentState().setAside(dieValue);
 	}
 
 	/**
-	 * @return List of integers representing all the dices placed aside
+	 * @return List of integers representing all the dice placed aside
 	 */
 
 	public List<Integer> getDiceAside() {
-		return getTurnOfCurrentPlayer().getDicesAside();
+		return getTurn().getDicesAside();
 	}
 
 	/**
-	 * @return List of integers representing all the dices thrown
+	 * @return List of integers representing all the dice thrown
 	 */
 
 	public List<Integer> getDiceThrown() {
-		return getTurnOfCurrentPlayer().getDicesThrown();
+		return getTurn().getDicesThrown();
 	}
 
 	/**
 	 * Method to check if a person is allowed to roll the dice
 	 *
-	 * @return true if a player may roll. False if not.
+	 * @return boolean to allow rolling.
 	 */
 
 	public boolean mayRoll() {
-		return playerGroup.getCurrentPlayer().getTurn().mayRoll();
+		return getCurrentState().mayRoll();
 	}
 
+	/**
+	 * Method to check if registering a new player is allowed
+	 *
+	 * @return boolean to allow registeren.
+	 */
+
+	public boolean mayRegister() {
+		return getCurrentState().mayRegister();
+	}
+	
 	/**
 	 * Change the isActive status of a player
 	 */
@@ -143,7 +148,7 @@ public class YahtzeeFacade {
 	/**
 	 * Get the Scoreboard for the current player.
 	 *
-	 * @return PlayerGroup consisting of all the players
+	 * @return Scoreboard of the current player.
 	 */
 
 	public Scoreboard getScoreboard() {
@@ -211,22 +216,47 @@ public class YahtzeeFacade {
 	 */
 	
 	public Map<String, Integer> getCategoriesAsMap() {
-		Map<String, Integer> categoryMap = new LinkedHashMap<>();
-		for (int i = 0; i < getCategoryList().size(); i++) {
-			categoryMap.put(getCategoryListStrings().get(i), getCategoryList().get(i).getScore());
-		}
-		return categoryMap;
+		return getScoreboard().getCategoriesAsMap();
 	}
 	
 	public void switchToNextPlayer() {
 		getPlayerGroup().switchToNextPlayer();
+		resetTurn();
+	}
+	
+	public State getCurrentState() {
+		return currentState;
+	}
+	
+	public void setCurrentState(State state) {
+		currentState = state;
 	}
 
-	public boolean getGameStarted() {
-		return gameStarted;
+	public Turn getTurn() {
+		return turn;
 	}
 
-	public void setGameStarted(boolean gameStarted) {
-		this.gameStarted = gameStarted;
+	private void resetTurn() {
+		this.turn = new Turn();
+	}
+
+	public State getRegisteringState() {
+		return registeringState;
+	}
+
+	public State getGameNotStartedState() {
+		return gameNotStartedState;
+	}
+
+	public State getPlayingState() {
+		return playingState;
+	}
+
+	public State getGameEndedState() {
+		return gameEndedState;
+	}
+	
+	public void endTurn() {
+		getCurrentState().endTurn();
 	}
 }
