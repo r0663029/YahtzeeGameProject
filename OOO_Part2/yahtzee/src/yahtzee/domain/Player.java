@@ -5,7 +5,6 @@ package yahtzee.domain;
  */
 public class Player {
     private final String name;
-    private Turn turn;
     private boolean isActive;
     private Scoreboard scoreboard;
 
@@ -13,9 +12,7 @@ public class Player {
      * Create a new player with the given name.
      */
     public Player(String name) {
-
         this.name = name;
-        this.turn = new Turn();
         this.isActive = false;
         this.scoreboard = new Scoreboard();
     }
@@ -27,22 +24,6 @@ public class Player {
      */
     public String getName() {
 	return name;
-    }
-
-    /**
-     * get the turn object of a player
-     */
-
-    public Turn getTurn() {
-        return turn;
-    }
-
-    /**
-     * Set the turn object of a player.
-     */
-
-    public void setTurn(Turn turn) {
-        this.turn = turn;
     }
 
     /**
