@@ -4,13 +4,8 @@ import java.util.List;
 
 public interface ScoreCategory {
 	public abstract void inputDice(List<Integer> dice);
-	
-	public abstract void setScore(int score);
-	
 	public abstract int getScore();
-	
 	public abstract boolean isUsed();
-	
 	public String getNameOfCategory();
 	
 }
