@@ -68,6 +68,16 @@ public class YahtzeeFacade {
 	}
 
 	/**
+	 * Method to check if registering a new player is allowed
+	 *
+	 * @return boolean to allow registeren.
+	 */
+
+	public boolean mayRegister() {
+		return getCurrentState().mayRegister();
+	}
+
+	/**
 	 * @return List of Integers. 
 	 * Returns the correct roll method based on the state of the game
 	 */
@@ -108,16 +118,6 @@ public class YahtzeeFacade {
 	public boolean mayRoll() {
 		return getCurrentState().mayRoll();
 	}
-
-	/**
-	 * Method to check if registering a new player is allowed
-	 *
-	 * @return boolean to allow registeren.
-	 */
-
-	public boolean mayRegister() {
-		return getCurrentState().mayRegister();
-	}
 	
 	/**
 	 * Change the isActive status of a player
@@ -141,7 +141,7 @@ public class YahtzeeFacade {
 	 * @return List of all the registered players in the playerGroup
 	 */
 
-	public List<Player> getRegisteredPlayers() {
+	private List<Player> getRegisteredPlayers() {
 		return getPlayerGroup().getPlayers();
 	}
 
@@ -174,6 +174,16 @@ public class YahtzeeFacade {
 	public List<String> getCategoryListStrings() {
 		return getCurrentPlayer().getScoreboard().getCategoryListAsString();
 	}
+
+	/**
+	 * 
+	 * @return Map with the name of the category and its score per player
+	 */
+
+	public Map<String, Integer> getCategoriesAsMap() {
+		return getScoreboard().getCategoriesAsMap();
+	}
+
 
 	/**
 	 * Get the Scoreboard for the current player.
@@ -214,10 +224,6 @@ public class YahtzeeFacade {
 	 * resets the index to 0.
 	 * Creates a new Turn object for the new active player
 	 */
-	
-	public Map<String, Integer> getCategoriesAsMap() {
-		return getScoreboard().getCategoriesAsMap();
-	}
 	
 	public void switchToNextPlayer() {
 		getPlayerGroup().switchToNextPlayer();

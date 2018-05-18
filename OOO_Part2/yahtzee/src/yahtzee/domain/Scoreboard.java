@@ -42,6 +42,15 @@ public class Scoreboard {
 		return categoryStrings;
 	}
 
+	public Map<String, Integer> getCategoriesAsMap() {
+		Map<String, Integer> categoryMap = new LinkedHashMap<>();
+		for (int i = 0; i < getCategoryList().size(); i++) {
+
+			categoryMap.put(getCategoryList().get(i).getNameOfCategory(), getCategoryList().get(i).getScore());
+		}
+		return categoryMap;
+	}
+
 	public ScoreCategory getCategory(String categoryName) {
 		for (ScoreCategory category: categoryList )  {
 			if (categoryName.equals(category.getNameOfCategory())) {
@@ -55,17 +64,5 @@ public class Scoreboard {
 		ScoreCategory category = getCategory(categoryName);
 		category.inputDice(dice);
 	}
-
-	public Map<String, Integer> getCategoriesAsMap() {
-		Map<String, Integer> categoryMap = new LinkedHashMap<>();
-		for (int i = 0; i < getCategoryList().size(); i++) {
-			
-			categoryMap.put(getCategoryList().get(i).getNameOfCategory(), getCategoryList().get(i).getScore());
-		}
-		return categoryMap;
-	}
 	
-	
-
-
 }
