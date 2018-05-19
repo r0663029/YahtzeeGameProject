@@ -4,10 +4,7 @@ import yahtzee.domain.score.ScoreCategory;
 import yahtzee.domain.score.lower.*;
 import yahtzee.domain.score.upper.*;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Scoreboard {
 	private List<ScoreCategory> categoryList = new ArrayList<>();
@@ -65,4 +62,24 @@ public class Scoreboard {
 		category.inputDice(dice);
 	}
 	
+	public int getTotalScore() {
+		int score = 0;
+		for (Map.Entry<String, Integer> entry : getCategoriesAsMap().entrySet()) {
+			score += entry.getValue();
+		}
+		return score;
+	}
+	
+	public int getLowerScore() {
+		int score = 0;
+		List<Integer> scores = new ArrayList<>(getCategoriesAsMap().values());
+		for (int i = 0; i < 5; i++) {
+			score += scores.get(i);
+		}
+		return score;
+	}
+	
+	public int getUpperScore() {
+		return getTotalScore()-getLowerScore();
+	}
 }

@@ -66,4 +66,18 @@ public class PlayerGroup {
 	public List<Player> getPlayers() {
 		return players;
 	}
+	
+	private Player getHighestScoringPlayer() {
+		Player highestPlayer = getPlayers().get(0);
+		for (Player player : getPlayers()) {
+			if (player.getScoreboard().getTotalScore()> highestPlayer.getScoreboard().getTotalScore()) {
+				highestPlayer = player;
+			}
+		}
+		return highestPlayer;
+	}
+	
+	public String getHighScore() {
+		return "Speler " + getHighestScoringPlayer().getName() + " heeft de hoogste score met een score van: " + getHighestScoringPlayer().getScoreboard().getTotalScore();
+	}
 }

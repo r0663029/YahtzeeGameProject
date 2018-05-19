@@ -264,4 +264,31 @@ public class YahtzeeFacade {
 	public void endTurn() {
 		getCurrentState().endTurn();
 	}
+
+	/**
+	 * Method returns a String with the name and the score of the player
+	 * @return Highest score for the whole game
+	 */
+	
+	public String getHighscore() {
+		return getPlayerGroup().getHighScore();
+	}
+
+	/**
+	 * 
+	 * @return total score for the current player
+	 */
+	
+	public int getTotalScore() {
+		return getScoreboard().getTotalScore();
+	}
+	
+	public int getTotalLowerScore() {
+		return getScoreboard().getLowerScore();
+	}
+	
+	public int getTotalUpperScore() {
+		return getScoreboard().getUpperScore();
+	}
+
 }
