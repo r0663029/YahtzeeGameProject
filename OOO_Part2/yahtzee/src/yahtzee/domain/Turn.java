@@ -19,7 +19,7 @@ public class Turn {
             counterThrows++;
             diceThrown = new ArrayList<>();
             for (int i = 0; i< (5 - getDicesAside().size()); i++) {
-            	diceThrown.add(new Die().getEyes());
+            	diceThrown.add((int)(Math.random()*6+1));
 			}
             if (counterThrows == 3) {
             	diceAside.addAll(diceThrown);
