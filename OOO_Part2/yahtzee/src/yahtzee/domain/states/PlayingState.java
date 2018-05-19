@@ -13,7 +13,8 @@ public class PlayingState implements State {
 	
 	@Override
 	public boolean mayRoll() {
-		return true;
+		return context.getTurn().mayRoll();
+		
 	}
 
 	@Override
