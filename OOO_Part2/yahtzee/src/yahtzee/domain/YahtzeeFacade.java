@@ -12,11 +12,11 @@ public class YahtzeeFacade {
 
 	private final PlayerGroup playerGroup;
 	private Turn turn;
-	State registeringState;
-	State gameNotStartedState;
-	State currentState;
-	State playingState;
-	State gameEndedState;
+	private State registeringState;
+	private State gameNotStartedState;
+	private State currentState;
+	private State playingState;
+	private State gameEndedState;
 
 	public YahtzeeFacade() {
 		playerGroup = new PlayerGroup();
@@ -51,8 +51,8 @@ public class YahtzeeFacade {
 	 *
 	 * @return the current player.
 	 */
-	
-	public Player getCurrentPlayer() {
+
+	private Player getCurrentPlayer() {
 		return playerGroup.getCurrentPlayer();
 	}
 
@@ -78,8 +78,7 @@ public class YahtzeeFacade {
 	}
 
 	/**
-	 * @return List of Integers. 
-	 * Returns the correct roll method based on the state of the game
+	 * rolls random dice
 	 */
 	public void roll() {
 		getCurrentState().roll();
