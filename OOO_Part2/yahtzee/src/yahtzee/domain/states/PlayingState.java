@@ -1,20 +1,20 @@
 package yahtzee.domain.states;
 
 import yahtzee.domain.DomainException;
-import yahtzee.domain.Turn;
 import yahtzee.domain.YahtzeeFacade;
 
 public class PlayingState implements State {
 	private YahtzeeFacade context;
+	private int counter;
 
 	public PlayingState(YahtzeeFacade context) {
 		this.context = context;
+		counter = context.getPlayerGroup().getPlayers().size() * 13;
 	}
 	
 	@Override
 	public boolean mayRoll() {
 		return context.getTurn().mayRoll();
-		
 	}
 
 	@Override
@@ -39,7 +39,13 @@ public class PlayingState implements State {
 
 	@Override
 	public void endTurn() {
-		context.switchToNextPlayer();
+		if(counter > 0) {
+			context.switchToNextPlayer();
+			counter--;
+		}
+		else {
+			context.setCurrentState(new GameEndedState(context));
+		}
 	}
 
 	@Override

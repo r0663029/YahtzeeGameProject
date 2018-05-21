@@ -43,5 +43,6 @@ public class GameEndedState implements State {
 	@Override
 	public void nextGame() {
 		context = new YahtzeeFacade();
+		context.setCurrentState(context.getGameNotStartedState());
 	}
 }
