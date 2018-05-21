@@ -122,7 +122,7 @@ public class YahtzeeFacade {
 	 * Change the isActive status of a player
 	 */
 
-	public void setActive() {
+	private void setActive() {
 		getCurrentPlayer().setActive(true);
 	}
 
@@ -150,7 +150,7 @@ public class YahtzeeFacade {
 	 * @return Scoreboard of the current player.
 	 */
 
-	public Scoreboard getScoreboard() {
+	private Scoreboard getScoreboard() {
 		return getCurrentPlayer().getScoreboard();
 	}
 
@@ -160,7 +160,7 @@ public class YahtzeeFacade {
 	 * @return List<ScoreCategory> for all the categories for the current player.
 	 */
 
-	public List<ScoreCategory> getCategoryList() {
+	private List<ScoreCategory> getCategoryList() {
 		return getCurrentPlayer().getScoreboard().getCategoryList();
 	}
 
@@ -191,7 +191,7 @@ public class YahtzeeFacade {
 	 * @return a specific ScoreCategory for the current player based on a String
 	 */
 
-	public ScoreCategory getCategory(String categoryName) {
+	private ScoreCategory getCategory(String categoryName) {
 		return getCurrentPlayer().getScoreboard().getCategory(categoryName);
 	}
 
@@ -202,7 +202,7 @@ public class YahtzeeFacade {
 	 * @return integer of the current score for the chosen category.
 	 */
 
-	public int getScoreForCategory(String categoryName) {
+	private int getScoreForCategory(String categoryName) {
 		ScoreCategory category = getCategory(categoryName);
 		return category.getScore();
 	}
@@ -258,7 +258,7 @@ public class YahtzeeFacade {
 		return playingState;
 	}
 
-	public State getGameEndedState() {
+	private State getGameEndedState() {
 		return gameEndedState;
 	}
 	
@@ -271,14 +271,14 @@ public class YahtzeeFacade {
 	 * @return Highest score for the whole game
 	 */
 	
-	public String getHighscore() {
+	private String getHighscore() {
 		return getPlayerGroup().getHighScore();
 	}
 	
 	public int getScoreSuggestion(String name) {
 		int score = 0;
 		ScoreCategory category = getCategory(name);
-		if (getDiceAside().size()!= 0 || getDiceThrown().size()!= 0) {
+		if (getDiceAside().size()!= 0 && getDiceThrown().size()!= 0) {
 			List<Integer> dice = this.getDiceThrown();
 			dice.addAll(this.getDiceAside());
 			if (category.suggestScore(dice)!= 0) {
@@ -286,29 +286,5 @@ public class YahtzeeFacade {
 			}
 		}
 		return score;
-	}
-
-	public static void main(String[] args) {
-		YahtzeeFacade facade = new YahtzeeFacade();
-		System.out.println("------" + facade.getCurrentState() + "----------\n");
-		facade.registerPlayer("Kristof");
-		facade.registerPlayer("Raf");
-		System.out.println("------" + facade.getCurrentState() + "----------\n");
-		facade.roll();
-		System.out.println("------" + facade.getCurrentState() + "----------\n");
-		System.out.println(facade.getCurrentPlayer());
-		System.out.println(facade.getDiceThrown());
-		facade.setAside(1);
-		System.out.println(facade.getDiceAside());
-		System.out.println("Suggestie voor score " + facade.getScoreSuggestion("Full House"));
-		facade.roll();
-		System.out.println(facade.getDiceThrown());
-		facade.roll();
-		System.out.println(facade.getDiceThrown());
-		System.out.println(facade.getDiceAside());
-		facade.setScore("Aces");
-		System.out.println(facade.getCategoriesAsMap());
-		facade.endTurn();
-		System.out.println("---------------------------");
 	}
 }

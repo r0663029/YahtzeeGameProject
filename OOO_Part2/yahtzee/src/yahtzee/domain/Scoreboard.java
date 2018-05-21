@@ -89,8 +89,4 @@ public class Scoreboard {
 	private int getUpperScore() {
 		return getTotalScore()-getLowerScore();
 	}
-	
-	public int suggestScore(String name) {
-		return getCategory(name).getScore();
-	}
 }
