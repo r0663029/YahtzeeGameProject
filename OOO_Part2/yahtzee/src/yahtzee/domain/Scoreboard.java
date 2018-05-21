@@ -39,12 +39,19 @@ public class Scoreboard {
 		return categoryStrings;
 	}
 
-	public Map<String, Integer> getCategoriesAsMap() {
+	private Map<String, Integer> getCategoriesAsMapNoTotals() {
 		Map<String, Integer> categoryMap = new LinkedHashMap<>();
 		for (int i = 0; i < getCategoryList().size(); i++) {
-
 			categoryMap.put(getCategoryList().get(i).getNameOfCategory(), getCategoryList().get(i).getScore());
 		}
+		return categoryMap;
+	}
+	
+	public Map<String, Integer> getCategoriesAsMap() {
+		Map<String, Integer> categoryMap = this.getCategoriesAsMapNoTotals();
+		categoryMap.put("Lower section total: ", this.getLowerScore());
+		categoryMap.put("upper section total: ", this.getUpperScore());
+		categoryMap.put("Grand total: ", this.getTotalScore());
 		return categoryMap;
 	}
 
@@ -64,22 +71,26 @@ public class Scoreboard {
 	
 	public int getTotalScore() {
 		int score = 0;
-		for (Map.Entry<String, Integer> entry : getCategoriesAsMap().entrySet()) {
+		for (Map.Entry<String, Integer> entry : getCategoriesAsMapNoTotals().entrySet()) {
 			score += entry.getValue();
 		}
 		return score;
 	}
 	
-	public int getLowerScore() {
+	private int getLowerScore() {
 		int score = 0;
-		List<Integer> scores = new ArrayList<>(getCategoriesAsMap().values());
+		List<Integer> scores = new ArrayList<>(getCategoriesAsMapNoTotals().values());
 		for (int i = 0; i < 5; i++) {
 			score += scores.get(i);
 		}
 		return score;
 	}
 	
-	public int getUpperScore() {
+	private int getUpperScore() {
 		return getTotalScore()-getLowerScore();
+	}
+	
+	public int suggestScore(String name) {
+		return getCategory(name).getScore();
 	}
 }

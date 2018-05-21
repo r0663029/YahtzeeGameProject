@@ -76,4 +76,12 @@ public class LargeStraight implements ScoreCategory {
 		return this.categoryName;
 	}
 
+	@Override
+	public int suggestScore( List<Integer> dice) {
+		if (isValidLargeStraight(dice)) {
+			return 40;
+		}
+		return 0;
+	}
+
 }

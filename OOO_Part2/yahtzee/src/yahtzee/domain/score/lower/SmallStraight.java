@@ -77,4 +77,12 @@ public class SmallStraight implements ScoreCategory {
 		return this.categoryName;
 	}
 
+	@Override
+	public int suggestScore( List<Integer> dice) {
+		if (isValidSmallStraight(dice)) {
+			return 30;
+		}
+		return 0;
+	}
+
 }

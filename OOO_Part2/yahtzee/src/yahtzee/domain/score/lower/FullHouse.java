@@ -69,4 +69,12 @@ public class FullHouse implements ScoreCategory {
 		return this.categoryName;
 	}
 
+	@Override
+	public int suggestScore( List<Integer> dice) {
+		if (isValidFullHouse(dice)) {
+			return 25;
+		}
+		return 0;
+	}
+
 }

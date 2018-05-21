@@ -7,5 +7,6 @@ public interface ScoreCategory {
 	public abstract int getScore();
 	public abstract boolean isUsed();
 	public String getNameOfCategory();
+	public int suggestScore(List<Integer> dice);
 	
 }

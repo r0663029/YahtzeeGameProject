@@ -60,4 +60,9 @@ public class Fours implements ScoreCategory  {
 	public String getNameOfCategory() {
 		return this.categoryName;
 	}
+
+	@Override
+	public int suggestScore( List<Integer> dice) {
+		return calculateScore(dice);
+	}
 }

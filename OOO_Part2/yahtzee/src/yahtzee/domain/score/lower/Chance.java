@@ -59,4 +59,9 @@ public class Chance implements ScoreCategory {
 		return this.categoryName;
 	}
 
+	@Override
+	public int suggestScore( List<Integer> dice) {
+		return calculateScore(dice);
+	}
+
 }

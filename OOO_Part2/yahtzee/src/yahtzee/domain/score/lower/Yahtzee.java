@@ -68,4 +68,12 @@ public class Yahtzee implements ScoreCategory {
 	public String getNameOfCategory() {
 		return this.categoryName;
 	}
+
+	@Override
+	public int suggestScore( List<Integer> dice) {
+		if (isValidYahtzee(dice)) {
+			return 50;
+		}
+		return 0;
+	}
 }

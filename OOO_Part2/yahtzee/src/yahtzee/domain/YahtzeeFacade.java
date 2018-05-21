@@ -215,6 +215,7 @@ public class YahtzeeFacade {
 	public void setScore( String categoryName) {
 		getScoreboard().setScore(categoryName, getDiceAside());
 	}
+	
 
 	/**
 	 * Changes the current active player to the next player in the PlayerGroup List
@@ -273,22 +274,41 @@ public class YahtzeeFacade {
 	public String getHighscore() {
 		return getPlayerGroup().getHighScore();
 	}
-
-	/**
-	 * 
-	 * @return total score for the current player
-	 */
 	
-	public int getTotalScore() {
-		return getScoreboard().getTotalScore();
-	}
-	
-	public int getTotalLowerScore() {
-		return getScoreboard().getLowerScore();
-	}
-	
-	public int getTotalUpperScore() {
-		return getScoreboard().getUpperScore();
+	public int getScoreSuggestion(String name) {
+		int score = 0;
+		ScoreCategory category = getCategory(name);
+		if (getDiceAside().size()!= 0 || getDiceThrown().size()!= 0) {
+			List<Integer> dice = this.getDiceThrown();
+			dice.addAll(this.getDiceAside());
+			if (category.suggestScore(dice)!= 0) {
+				score = category.suggestScore(dice);
+			}
+		}
+		return score;
 	}
 
+	public static void main(String[] args) {
+		YahtzeeFacade facade = new YahtzeeFacade();
+		System.out.println("------" + facade.getCurrentState() + "----------\n");
+		facade.registerPlayer("Kristof");
+		facade.registerPlayer("Raf");
+		System.out.println("------" + facade.getCurrentState() + "----------\n");
+		facade.roll();
+		System.out.println("------" + facade.getCurrentState() + "----------\n");
+		System.out.println(facade.getCurrentPlayer());
+		System.out.println(facade.getDiceThrown());
+		facade.setAside(1);
+		System.out.println(facade.getDiceAside());
+		System.out.println("Suggestie voor score " + facade.getScoreSuggestion("Full House"));
+		facade.roll();
+		System.out.println(facade.getDiceThrown());
+		facade.roll();
+		System.out.println(facade.getDiceThrown());
+		System.out.println(facade.getDiceAside());
+		facade.setScore("Aces");
+		System.out.println(facade.getCategoriesAsMap());
+		facade.endTurn();
+		System.out.println("---------------------------");
+	}
 }
