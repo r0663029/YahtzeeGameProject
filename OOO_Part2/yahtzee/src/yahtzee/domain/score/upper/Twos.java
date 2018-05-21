@@ -42,10 +42,7 @@ public class Twos implements ScoreCategory  {
 
 	@Override
 	public int getScore() {
-		if (isUsed()) {
-			return this.score;
-		}
-		return 0;
+		return score;
 	}
 
 	@Override

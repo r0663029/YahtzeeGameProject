@@ -72,7 +72,9 @@ public class Scoreboard {
 	public int getTotalScore() {
 		int score = 0;
 		for (Map.Entry<String, Integer> entry : getCategoriesAsMapNoTotals().entrySet()) {
-			score += entry.getValue();
+			if(entry.getValue() != -1) {
+				score += entry.getValue();
+			}
 		}
 		return score;
 	}
@@ -81,7 +83,10 @@ public class Scoreboard {
 		int score = 0;
 		List<Integer> scores = new ArrayList<>(getCategoriesAsMapNoTotals().values());
 		for (int i = 0; i < 5; i++) {
-			score += scores.get(i);
+			if (scores.get(i) != -1) {
+				score += scores.get(i);
+			}
+			
 		}
 		return score;
 	}

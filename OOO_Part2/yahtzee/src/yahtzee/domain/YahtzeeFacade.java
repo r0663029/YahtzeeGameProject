@@ -278,12 +278,10 @@ public class YahtzeeFacade {
 	public int getScoreSuggestion(String name) {
 		int score = 0;
 		ScoreCategory category = getCategory(name);
-		if (getDiceAside().size()!= 0 && getDiceThrown().size()!= 0) {
-			List<Integer> dice = this.getDiceThrown();
-			dice.addAll(this.getDiceAside());
-			if (category.suggestScore(dice)!= 0) {
-				score = category.suggestScore(dice);
-			}
+		List<Integer> dice = this.getDiceThrown();
+		dice.addAll(this.getDiceAside());
+		if (dice.size() == 5) {
+			score = category.suggestScore(dice);
 		}
 		return score;
 	}
