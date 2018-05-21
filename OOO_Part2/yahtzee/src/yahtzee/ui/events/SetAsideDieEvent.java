@@ -7,14 +7,14 @@ import static yahtzee.ui.events.GameBoardEvent.SET_ASIDE_DIE;
 
 public class SetAsideDieEvent extends GameBoardEvent {
 
-    private final int payload;
+    private final int die;
 
-    public SetAsideDieEvent(Event source, GameBoard target, int payload) {
-	super(source, target, SET_ASIDE_DIE);
-	this.payload = payload;
+    public SetAsideDieEvent(int die) {
+	super(SET_ASIDE_DIE);
+	this.die = die;
     }
 
-    public int getPayload() {
-	return payload;
+    public int getDie() {
+	return die;
     }
 }

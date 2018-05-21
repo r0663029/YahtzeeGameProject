@@ -8,11 +8,20 @@ public class DieButton extends Button {
 
     public DieButton(int numberOfEyes) {
 	super();
-	this.numberOfEyes = numberOfEyes;
-	this.setText(Integer.toString(numberOfEyes));
+        setNumberOfEyes(numberOfEyes);
+    }
+
+    public DieButton() {
+	super();
+	this.numberOfEyes = 0;
     }
 
     public int getNumberOfEyes() {
 	return numberOfEyes;
+    }
+
+    public void setNumberOfEyes(int numberOfEyes) {
+	this.numberOfEyes = numberOfEyes;
+	this.setText(Integer.toString(numberOfEyes));
     }
 }

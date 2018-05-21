@@ -9,8 +9,8 @@ public class ChooseCategoryEvent extends GameBoardEvent {
 
     private final String category;
 
-    public ChooseCategoryEvent(Event source, GameBoard target, String category) {
-	super(source, target, CHOOSE_CATEGORY);
+    public ChooseCategoryEvent(String category) {
+	super(CHOOSE_CATEGORY);
 	this.category = category;
     }
 

@@ -1,206 +1,51 @@
 package yahtzee.ui;
 
-import static javafx.geometry.Pos.CENTER;
-
-import java.util.List;
-import java.util.Collection;
-
-import static javafx.collections.FXCollections.observableArrayList;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.Node;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 
 import yahtzee.domain.YahtzeeFacade;
-
-import yahtzee.ui.events.GameBoardEvent;
-import yahtzee.ui.events.SetAsideDieEvent;
-import yahtzee.ui.events.ChooseCategoryEvent;
-import static yahtzee.ui.events.GameBoardEvent.ROLL;
 
 /**
  * This class defines the main window the players interact with.
  *
- * The objects of this class show a particular player a game board, and an
- * indication of which player's turn it is.
+ * The objects of this class show a particular player a game board.
  */
-public class GameBoard extends Stage {
-
+public class GameBoard extends VBox {
     private static final double spacing = 5;
 
     private final YahtzeeFacade model;
 
-    private VBox dicePanel;
-    private Label noDiceRolledMessage;
-    private ObservableList<Node> diceThrown;
-    private ObservableList<Node> diceAside;
-    private Button roll;
-    private ComboBox<String> categoriesComboBox;
-    private Button confirmCategoryButton;
-    private Label footer;
+    private DicePane dicePane;
+    private ChooseCategoryPane chooseCategoryPane;
 
     public GameBoard(YahtzeeFacade model) {
-	super();
+	super(spacing);
+	this.setPrefSize(500, 500);
+
+	dicePane = new DicePane(model);
+	chooseCategoryPane = new ChooseCategoryPane(model);
+
+	this.getChildren().add(dicePane);
+	this.getChildren().add(chooseCategoryPane);
 
 	this.model = model;
-	this.setScene(createScene());
     }
 
     /**
      * Update this board based on the current state of the model.
      */
     public void update() {
-	updateCurrentPlayer();
-	updateDice();
-	updateMayRoll();
+	dicePane.update();
+	chooseCategoryPane.update();
     }
 
-    /**
-     * Update the name displayed as current player.
-     */
-    private void updateCurrentPlayer() {
-	footer.setText(model.getCurrentPlayerName() + " is playing.");
+    public void activate() {
+	dicePane.activate();
+	chooseCategoryPane.activate();
     }
 
-    /**
-     * Update the dice shown to the user.
-     */
-    private void updateDice() {
-	diceThrown.clear();
-	diceAside.clear();
-
-	for (int die : model.getDiceThrown()) {
-	    diceThrown.add(createDice(die, true));
-	}
-	for (int die : model.getDiceAside()) {
-	    this.diceAside.add(createDice(die, false));
-	}
-    }
-
-    /**
-     * Update wether the player may roll any dice.
-     */
-    private void updateMayRoll() {
-	if (model.mayRoll()) {
-	    roll.setDisable(false);
-	} else {
-	    roll.setDisable(true);
-	    dicePanel.setDisable(true);
-	}
-    }
-
-    private DieButton createDice(int numberOfEyes, boolean active) {
-	DieButton die = new DieButton(numberOfEyes);
-
-	if (active) {
-	    die.setOnAction(this::setAsideDieHandler);
-	} else {
-	    die.setDisable(true);
-	}
-
-	return die;
-    }
-
-    private Scene createScene() {
-	VBox rootPane = new VBox(spacing);
-	rootPane.setAlignment(CENTER);
-
-	rootPane.getChildren().add(createHeaderPane());
-	rootPane.getChildren().add(createMainPane());
-	rootPane.getChildren().add(createFooterPane(model.getCurrentPlayerName()));
-
-	return new Scene(rootPane);
-    }
-
-    private Pane createHeaderPane() {
-	HBox headerPane = new HBox(spacing);
-	headerPane.setAlignment(CENTER);
-
-	headerPane.getChildren().add(new Label("Yahtzee"));
-
-	return headerPane;
-    }
-
-    private Pane createMainPane() {
-	VBox mainPane = new VBox(spacing);
-	mainPane.setPrefSize(500, 500);
-
-	mainPane.getChildren().add(createDiceDisplay());
-
-	roll = new Button("roll remaining dice.");
-	roll.setOnAction(this::rollHandler);
-	mainPane.getChildren().add(roll);
-
-	categoriesComboBox =
-	    new ComboBox<>(observableArrayList(model.getCategoryListStrings()));
-	categoriesComboBox.getSelectionModel().selectFirst();
-	mainPane.getChildren().add(categoriesComboBox);
-
-	confirmCategoryButton = new Button("Confirm category");
-	confirmCategoryButton.setOnAction(this::chooseCategoryHandler);
-	confirmCategoryButton.setDisable(true);
-	mainPane.getChildren().add(confirmCategoryButton);
-
-	return mainPane;
-    }
-
-    private void rollHandler(Event event) {
-	noDiceRolledMessage.setVisible(false);
-	dicePanel.setVisible(true);
-
-	this.fireEvent(new GameBoardEvent(event, this, ROLL));
-    }
-
-    private void chooseCategoryHandler(Event event) {
-	String selection = (String) categoriesComboBox.getValue();
-	this.fireEvent(new ChooseCategoryEvent(event, this, selection));
-    }
-
-    private Pane createDiceDisplay() {
-	Label diceThrownLabel = new Label("Dice thrown:");
-	HBox diceThrownPanel = new HBox(spacing);
-	diceThrown = diceThrownPanel.getChildren();
-
-	Label diceAsideLabel = new Label("Dice aside:");
-	HBox diceAsidePanel = new HBox(spacing);
-	diceAside = diceAsidePanel.getChildren();
-
-        dicePanel = new VBox(spacing);
-	dicePanel.getChildren().add(diceThrownLabel);
-	dicePanel.getChildren().add(diceThrownPanel);
-	dicePanel.getChildren().add(diceAsideLabel);
-	dicePanel.getChildren().add(diceAsidePanel);
-        dicePanel.setVisible(false);
-
-	noDiceRolledMessage = new Label("You haven't rolled any dice yet.");
-
-	VBox diceDisplay = new VBox(spacing);
-	diceDisplay.getChildren().add(noDiceRolledMessage);
-	diceDisplay.getChildren().add(dicePanel);
-
-	return diceDisplay;
-    }
-
-    private void setAsideDieHandler(Event event) {
-	DieButton targetDieButton = (DieButton) event.getTarget();
-	int numberOfEyes = targetDieButton.getNumberOfEyes();
-	this.fireEvent(new SetAsideDieEvent(event, this, numberOfEyes));
-    }
-
-    private Pane createFooterPane(String firstPlayer) {
-	HBox footerPane = new HBox(spacing);
-	footerPane.setAlignment(CENTER);
-
-	footer = new Label(firstPlayer + " may start the game.");
-	footerPane.getChildren().add(footer);
-
-	return footerPane;
+    public void deactivate() {
+	dicePane.deactivate();
+	chooseCategoryPane.deactivate();
     }
 }
