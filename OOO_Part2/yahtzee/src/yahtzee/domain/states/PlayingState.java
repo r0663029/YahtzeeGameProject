@@ -39,6 +39,7 @@ public class PlayingState implements State {
 
 	@Override
 	public void endTurn() {
+		System.out.println(counter);
 		if(counter > 0) {
 			context.switchToNextPlayer();
 			counter--;

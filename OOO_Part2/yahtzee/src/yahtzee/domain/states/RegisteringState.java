@@ -24,7 +24,7 @@ public class RegisteringState implements State {
 	@Override
 	public void roll() {
 		context.getTurn().roll();
-		context.setCurrentState(context.getPlayingState());
+		context.setCurrentState(new PlayingState(context));
 	}
 
 	@Override

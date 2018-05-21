@@ -45,4 +45,5 @@ public class GameEndedState implements State {
 		context = new YahtzeeFacade();
 		context.setCurrentState(context.getGameNotStartedState());
 	}
+	
 }

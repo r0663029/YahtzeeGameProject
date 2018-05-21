@@ -253,14 +253,6 @@ public class YahtzeeFacade {
 	public State getGameNotStartedState() {
 		return gameNotStartedState;
 	}
-
-	public State getPlayingState() {
-		return playingState;
-	}
-
-	private State getGameEndedState() {
-		return gameEndedState;
-	}
 	
 	public void endTurn() {
 		getCurrentState().endTurn();
@@ -284,5 +276,53 @@ public class YahtzeeFacade {
 			score = category.suggestScore(dice);
 		}
 		return score;
+	}
+
+	public static void main(String[] args) {
+		YahtzeeFacade facade = new YahtzeeFacade();
+		System.out.println("------" + facade.getCurrentState() + "----------\n");
+		facade.registerPlayer("Kristof");
+		facade.registerPlayer("Raf");
+		System.out.println("------" + facade.getCurrentState() + "----------\n");
+		facade.roll();
+		System.out.println("------" + facade.getCurrentState() + "----------\n");
+		System.out.println(facade.getCurrentPlayer());
+		System.out.println(facade.getDiceThrown());
+		facade.setAside(1);
+		System.out.println(facade.getDiceAside());
+		facade.roll();
+		System.out.println(facade.getDiceThrown());
+		facade.roll();
+		System.out.println(facade.getDiceThrown());
+		System.out.println(facade.getDiceAside());
+		facade.setScore("Aces");
+		System.out.println(facade.getCategoriesAsMap());
+		facade.endTurn();
+		System.out.println("---------------------------");
+		System.out.println(facade.getCurrentPlayerName());
+		facade.roll();
+		facade.roll();
+		facade.roll();
+		System.out.println(facade.getDiceAside());
+		facade.setScore("Chance");
+		facade.endTurn();
+		System.out.println("---------------------------");
+		System.out.println(facade.getCurrentPlayerName());
+		System.out.println(facade.getCategoryListStrings());
+		System.out.println(facade.getCategoriesAsMap());
+		facade.roll();
+		facade.roll();
+		facade.roll();
+		System.out.println(facade.getDiceAside());
+		facade.setScore("Chance");
+		facade.endTurn();
+		System.out.println("---------------------------");
+		System.out.println(facade.getCurrentPlayerName());
+		System.out.println(facade.getCategoryListStrings());
+		System.out.println(facade.getCategoriesAsMap());
+		System.out.println("------------EINDE SPEL------------");
+		System.out.println(facade.getHighscore());
+
+
 	}
 }
