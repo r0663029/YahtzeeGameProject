@@ -38,6 +38,11 @@ public class Turn {
         int die = diceThrown.remove(diceThrown.indexOf(dieValue));
         diceAside.add(die);
     }
+    
+    public void setBack(int dieValue) {
+    	int die = diceAside.remove(diceAside.indexOf(dieValue));
+    	diceThrown.add(die);
+	}
 
     public List<Integer> getDicesAside() {
         return this.diceAside;

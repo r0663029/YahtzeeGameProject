@@ -9,4 +9,5 @@ public interface State {
 	public void setAside(int dieValue);
 	public void endTurn();
 	public void nextGame();
+	public void setBack(int dieValue);
 }

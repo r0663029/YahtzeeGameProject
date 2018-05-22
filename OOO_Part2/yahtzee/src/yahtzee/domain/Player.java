@@ -5,7 +5,6 @@ package yahtzee.domain;
  */
 public class Player {
     private final String name;
-    private boolean isActive;
     private Scoreboard scoreboard;
 
     /**
@@ -13,7 +12,6 @@ public class Player {
      */
     public Player(String name) {
         this.name = name;
-        this.isActive = false;
         this.scoreboard = new Scoreboard();
     }
 
@@ -25,23 +23,7 @@ public class Player {
     public String getName() {
 	return name;
     }
-
-    /**
-     * get the status of the isActive boolean.
-     */
-
-    public boolean getActive() {
-        return isActive;
-    }
-
-    /**
-     * Change the isActive boolean
-     */
-
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
+    
     /**
      * Get the scoreboard for a specific player
      */

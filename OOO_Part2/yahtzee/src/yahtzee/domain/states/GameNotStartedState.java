@@ -39,6 +39,11 @@ public class GameNotStartedState implements State {
 	}
 
 	@Override
+	public void setBack(int dieValue) {
+		throw new DomainException("Player is not allowed to set back dice in this state");
+	}
+
+	@Override
 	public void endTurn() {
 		throw new DomainException("Player is not allowed to end his turn as there are not turns yet");
 	}

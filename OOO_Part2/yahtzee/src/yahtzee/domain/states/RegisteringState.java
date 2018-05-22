@@ -36,6 +36,11 @@ public class RegisteringState implements State {
 	public void setAside(int dieValue) {
 		throw new DomainException("Player is not allowed to set the dice aside at this state");
 	}
+	
+	@Override
+	public void setBack(int dieValue) {
+		throw new DomainException("Player is not allowed to set back dice in this state");
+	}
 
 	@Override
 	public void endTurn() {

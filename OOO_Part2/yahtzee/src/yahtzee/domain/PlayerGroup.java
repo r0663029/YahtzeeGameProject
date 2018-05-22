@@ -22,9 +22,6 @@ public class PlayerGroup {
 	 * @param player The player to be added.
 	 */
 	public void addPlayer(Player player) {
-		if (players.size() == 0) {
-			player.setActive(true);
-		}
 		players.add(player);
 	}
 
@@ -38,13 +35,11 @@ public class PlayerGroup {
 	}
 
 	public void switchToNextPlayer() {
-		getCurrentPlayer().setActive(false);
 		if (currentPlayerIndex < getPlayers().size() - 1) {
 			currentPlayerIndex++;
 		} else {
 			currentPlayerIndex = 0;
 		}
-		getPlayers().get(currentPlayerIndex).setActive(true);
 	}
 
 	/**

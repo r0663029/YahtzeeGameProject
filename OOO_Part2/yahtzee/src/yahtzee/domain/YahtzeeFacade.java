@@ -85,12 +85,19 @@ public class YahtzeeFacade {
 	}
 
 	/**
-	 * @param dieValue representing the eyes of a single die.
+	 * @param dieValue representing the eyes of a single die to set aside.
 	 */
 
 	public void setAside(int dieValue) {
 		getCurrentState().setAside(dieValue);
 	}
+
+	/**
+	 * 
+	 * @param dieValue representing the eyes of a single die to place back.
+	 */
+	
+	public void setBack(int dieValue) {getCurrentState().setBack(dieValue);}
 
 	/**
 	 * @return List of integers representing all the dice placed aside
@@ -116,14 +123,6 @@ public class YahtzeeFacade {
 
 	public boolean mayRoll() {
 		return getCurrentState().mayRoll();
-	}
-	
-	/**
-	 * Change the isActive status of a player
-	 */
-
-	private void setActive() {
-		getCurrentPlayer().setActive(true);
 	}
 
 	/**
@@ -153,16 +152,7 @@ public class YahtzeeFacade {
 	private Scoreboard getScoreboard() {
 		return getCurrentPlayer().getScoreboard();
 	}
-
-	/**
-	 * Get the CategoryList for the current player.
-	 *
-	 * @return List<ScoreCategory> for all the categories for the current player.
-	 */
-
-	private List<ScoreCategory> getCategoryList() {
-		return getCurrentPlayer().getScoreboard().getCategoryList();
-	}
+	
 
 	/**
 	 * Get the CategoryList for the current player .
@@ -276,5 +266,29 @@ public class YahtzeeFacade {
 			score = category.suggestScore(dice);
 		}
 		return score;
+	}
+
+	public static void main(String[] args) {
+		YahtzeeFacade facade = new YahtzeeFacade();
+				facade.registerPlayer("Kristof");
+		facade.registerPlayer("Raf");
+		facade.registerPlayer("Sam");
+		facade.getPlayerGroup();
+		System.out.println(facade.getRegisteredPlayers());
+		System.out.println(facade.getCurrentPlayer());
+		System.out.println(facade.getCurrentPlayer());
+		System.out.println("----------------------------------");
+		facade.switchToNextPlayer();
+		System.out.println(facade.getCurrentPlayer());
+		System.out.println(facade.getCurrentPlayer());
+		System.out.println(facade.getRegisteredPlayers().get(0));
+		System.out.println("----------------------------------");
+		facade.switchToNextPlayer();
+		System.out.println(facade.getCurrentPlayer());
+		System.out.println(facade.getCurrentPlayer());
+		System.out.println("----------------------------------");
+		facade.switchToNextPlayer();
+		System.out.println(facade.getCurrentPlayer());
+		System.out.println(facade.getCurrentPlayer());
 	}
 }

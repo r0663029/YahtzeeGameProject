@@ -38,6 +38,11 @@ public class PlayingState implements State {
 	}
 
 	@Override
+	public void setBack(int dieValue) {
+		context.getTurn().setBack(dieValue);
+	}
+
+	@Override
 	public void endTurn() {
 		System.out.println(counter);
 		if(counter > 0) {
@@ -53,4 +58,6 @@ public class PlayingState implements State {
 	public void nextGame() {
 		throw new DomainException("Current game is not finished yet!");
 	}
+
+	
 }
