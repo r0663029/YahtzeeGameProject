@@ -267,28 +267,4 @@ public class YahtzeeFacade {
 		}
 		return score;
 	}
-
-	public static void main(String[] args) {
-		YahtzeeFacade facade = new YahtzeeFacade();
-				facade.registerPlayer("Kristof");
-		facade.registerPlayer("Raf");
-		facade.registerPlayer("Sam");
-		facade.getPlayerGroup();
-		System.out.println(facade.getRegisteredPlayers());
-		System.out.println(facade.getCurrentPlayer());
-		System.out.println(facade.getCurrentPlayer());
-		System.out.println("----------------------------------");
-		facade.switchToNextPlayer();
-		System.out.println(facade.getCurrentPlayer());
-		System.out.println(facade.getCurrentPlayer());
-		System.out.println(facade.getRegisteredPlayers().get(0));
-		System.out.println("----------------------------------");
-		facade.switchToNextPlayer();
-		System.out.println(facade.getCurrentPlayer());
-		System.out.println(facade.getCurrentPlayer());
-		System.out.println("----------------------------------");
-		facade.switchToNextPlayer();
-		System.out.println(facade.getCurrentPlayer());
-		System.out.println(facade.getCurrentPlayer());
-	}
 }
